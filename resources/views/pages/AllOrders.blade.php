@@ -184,12 +184,12 @@
                                 <input hidden id="idOrderUpdateCompleted" name="idOrderUpdateCompleted">
                                 
                                 <p class="text-bold">Ngày:</p>
-                                <input data-role="datepicker" id="idDayCompleted" name="idDayCompleted" class="bg-blue" data-format="%Y-%m-%d" data-validate="required">
+                                <input data-role="datepicker" id="idDayCompleted" name="idDayCompleted" class="bg-blue" data-format="%Y-%m-%d" data-validate="required" data-on-open="$('#titleUpdateDayCompleted').addClass('d-none');" data-on-close="$('#titleUpdateDayCompleted').removeClass('d-none');">
                                 <span class="invalid_feedback">
                                         Vui lòng ghi cước hổ trợ bằng số
                                 </span>
                                 <p class="text-bold">Giờ:</p>
-                                <input data-role="timepicker" id="idHourCompleted" name="idHourCompleted" data-format="%H:%i:%s"class="bg-blue"><br>
+                                <input data-role="timepicker" id="idHourCompleted" name="idHourCompleted" data-format="%H:%i:%s" class="bg-blue" data-on-open="$('#titleUpdateDayCompleted').addClass('d-none');" data-on-close="$('#titleUpdateDayCompleted').removeClass('d-none');"><br>
                                 <div class="text-center">
                                     <button class="button mr-2 bg-blue" >Cập nhật</button>
                                     <button class="button js-dialog-close" onclick="event.preventDefault();">Hủy bỏ</button>
@@ -299,7 +299,7 @@
                         let supportTrans ='';
                         
                         if(indexStringSupportTrans>-1){
-                            let stringIndexSupportTrans = stringSupportTrans.substring(indexStringSupportTrans+15,stringSupportTrans.length);                     
+                            let stringIndexSupportTrans = stringSupportTrans.substring(indexStringSupportTrans+16,stringSupportTrans.length);                     
                             let numberSupportTrans = parseInt(stringIndexSupportTrans.replace("VNĐ",''));
                             let totalMoney = (sumMoneyOrder-numberSupportTrans).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
                             $(td).html("<code class='bg-amber fg-black'>Tổng tiền: "+totalMoney+" VNĐ"+"</code>");
@@ -403,6 +403,17 @@
 
     function updateDayCompletedOrder(idOrder,nameCus){
         $('#infoboxUpdateDayCompleted').data('infobox').open();
+        let d = new Date();
+
+        let mm = d.getMonth() + 1;
+        let dd = d.getDate();
+        let yyyy = d.getFullYear();
+        let format = yyyy + '/' + mm + '/' + dd
+        
+        let time = d.toLocaleTimeString();
+
+        $('#idDayCompleted').data("datepicker").val(format);
+        $('#idHourCompleted').data("timepicker").val(time);
         $('#idOrderUpdateCompleted').val(idOrder);
         $('#titleUpdateDayCompleted').text('Cập nhật ngày giao hàng của: '+nameCus);
     }
