@@ -28,6 +28,7 @@
         <li><a href="{{url('/allorder')}}"><span class="mif-table icon"></span>Danh sách Đơn Hàng</a></li>
         <li><a href="{{url('/customers')}}"><span class="mif-users icon"></span>Khách Hàng</a></li>
         <li><a href="{{url('/products')}}"><span class="mif-stack3 icon"></span>Sản Phẩm</a></li>
+        <li><a href="{{url('/chart')}}"><span class="mif-chart-line icon"></span>Thống Kê</a></li>
         <li><a href="{{url('/mapcustomer')}}"><span class="mif-map icon"></span>Vị trí khách hàng</a></li>
 
         <li class="divider"></li>

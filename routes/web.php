@@ -50,3 +50,7 @@ Route::post('/allorder/detailorder', 'AllOrderController@detailorder');
 
 Route::get('/mapcustomer', 'MapCustomerController@index');
 Route::post('/mapcustomer/getlatlng', 'MapCustomerController@getlatlng')->name("getlatlng");
+
+Route::get('/chart', 'ChartController@index');
+Route::post('/chart/getchart', 'ChartController@getchart');
+Route::post('/chart/getchartpeople', 'ChartController@getchartpeople');

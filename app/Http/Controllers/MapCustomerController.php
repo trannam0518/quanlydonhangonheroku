@@ -6,6 +6,21 @@ use Illuminate\Http\Request;
 use App\Customers;
 class MapCustomerController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
     public function index(){
         $dataCustomer = Customers::where('customer_status',1)
                                     ->select(

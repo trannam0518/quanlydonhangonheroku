@@ -80,8 +80,19 @@
                                     @endfor
 
                                     @for($k=0;$k<$countPromotion;$k++)
-                                   
-                                        @if ($promotion[$k]->promotion_order_id==$dataOrder[$i]->order_id&&$promotion[$k]->promotion_cost_Transport!="")
+
+                                        @if ($promotion[$k]->promotion_order_id==$dataOrder[$i]->order_id&&$promotion[$k]->promotion_cost_Transport==0)
+                                        <li>                                       
+                                                
+                                            <code class="bg-gray fg-black" >Hổ trợ vận chuyển: {{$promotion[$k]->promotion_cost_Transport}} VNĐ</code>                                     
+                                            </br>
+                                            <code class="alert" onclick="removeSupportTransport({{$promotion[$k]->promotion_id}},'{{$dataOrder[$i]->customer_name}}')">Xóa</code>
+                                            <code class="warning" onclick="editSupportTransport({{$promotion[$k]->promotion_id}},{{$promotion[$k]->promotion_cost_Transport}},'{{$dataOrder[$i]->customer_name}}')">Sửa</code>
+                                        </li> 
+                                        @endif   
+
+
+                                        @if ($promotion[$k]->promotion_order_id==$dataOrder[$i]->order_id&&$promotion[$k]->promotion_cost_Transport!='')
                                         <li>                                       
                                                 
                                             <code class="bg-gray fg-black" >Hổ trợ vận chuyển: {{$promotion[$k]->promotion_cost_Transport}} VNĐ</code>                                     
@@ -237,6 +248,18 @@
                                 </select>
                                 <span class="invalid_feedback">
                                     Sản phẩm không được trống
+                                </span>                               
+
+                                <label class="text-bold mt-2">Giá sản phẩm</label>
+                                <input type="text" autocomplete="off" data-role="input" id="orderPrice" data-validate="required" pattern="^\$\d{1,3}(,\d{3})*(\.\d+)?$" data-type="currency" ></>
+                                <span class="invalid_feedback">
+                                    Vui lòng ghi giá sản phẩm bằng số
+                                </span>
+
+                                <div><label class="text-bold">Số lượng</label></div>
+                                <input type="number" autocomplete="off" data-role="input" id="orderAmount" data-validate="required number"> 
+                                <span class="invalid_feedback">
+                                    Vui lòng ghi số lượng bằng số
                                 </span>
 
                                 <label class="text-bold">Đơn vị tính</label>
@@ -253,18 +276,6 @@
                                 <a class="button mb-2" onclick="$('#orderUnit').val($(this).text())">{{$dataOrderDetail[$i]->order_detail_unit}}</a>                               
                                 @endfor
                                 </div>
-
-                                <label class="text-bold mt-2">Giá sản phẩm</label>
-                                <input type="text" autocomplete="off" data-role="input" id="orderPrice" data-validate="required" pattern="^\$\d{1,3}(,\d{3})*(\.\d+)?$" data-type="currency" ></>
-                                <span class="invalid_feedback">
-                                    Vui lòng ghi giá sản phẩm bằng số
-                                </span>
-
-                                <div><label class="text-bold">Số lượng</label></div>
-                                <input type="number" autocomplete="off" data-role="input" id="orderAmount" data-validate="required number"> 
-                                <span class="invalid_feedback">
-                                    Vui lòng ghi số lượng bằng số
-                                </span>
 
                                 <div style="margin-left: 0px; margin-right:0px" class="form-group mt-2 row">                             
                                     <button style="padding:0px" class="cell p-1 m-1" onclick="calTotalMoney('orderPrice','orderAmount',$(this).next());"><span class="mif-calculator2"></span>Click để tính tổng tiền</button>
@@ -430,6 +441,18 @@
                                 </select>
                                 <span class="invalid_feedback">
                                     Tên sản phẩm không được trống
+                                </span>                               
+
+                                <label class="text-bold mt-2">Giá sản phẩm</label>
+                                <input type="text" autocomplete="off" data-role="input" id="editPriceProduct" name="editPriceProduct" data-validate="required" pattern="^\$\d{1,3}(,\d{3})*(\.\d+)?$" data-type="currency" ></input>
+                                <span class="invalid_feedback">
+                                    Vui lòng ghi giá sản phẩm bằng số
+                                </span>
+
+                                <div><label class="text-bold">Số lượng</label></div>
+                                <input type="number" autocomplete="off" data-role="input" id="editAmountProduct" name="editAmountProduct"data-validate="required number"> 
+                                <span class="invalid_feedback">
+                                    Vui lòng ghi số lượng bằng số
                                 </span>
 
                                 <label class="text-bold">Đơn vị tính</label>
@@ -447,18 +470,6 @@
                                 <a class="button mb-2" onclick="$('#editUnitProduct').val($(this).text())">{{$dataOrderDetail[$i]->order_detail_unit}}</a>                               
                                 @endfor
                                 </div>
-
-                                <label class="text-bold mt-2">Giá sản phẩm</label>
-                                <input type="text" autocomplete="off" data-role="input" id="editPriceProduct" name="editPriceProduct" data-validate="required" pattern="^\$\d{1,3}(,\d{3})*(\.\d+)?$" data-type="currency" ></input>
-                                <span class="invalid_feedback">
-                                    Vui lòng ghi giá sản phẩm bằng số
-                                </span>
-
-                                <div><label class="text-bold">Số lượng</label></div>
-                                <input type="number" autocomplete="off" data-role="input" id="editAmountProduct" name="editAmountProduct"data-validate="required number"> 
-                                <span class="invalid_feedback">
-                                    Vui lòng ghi số lượng bằng số
-                                </span>
                             
                                 <div style="margin-left: 0px; margin-right:0px" class="form-group mt-2 row">                             
                                     <button style="padding:0px" class="cell p-1 m-1" onclick="calTotalMoney('editPriceProduct','editAmountProduct',$(this).next());"><span class="mif-calculator2"></span>Click để tính tổng tiền</button>
@@ -513,6 +524,19 @@
                                 <span class="invalid_feedback mb-2">
                                     Vui lòng chọn sản phẩm
                                 </span>                                               
+                               
+                                <label class="text-bold mt-2">Giá sản phẩm</label>
+                                <input type="text" autocomplete="off" data-role="input" id="addPriceProduct" name="addPriceProduct" data-validate="required" pattern="^\$\d{1,3}(,\d{3})*(\.\d+)?$" data-type="currency" ></input>
+                                <span class="invalid_feedback">
+                                    Vui lòng ghi giá sản phẩm bằng số
+                                </span>
+
+
+                                <div><label class="text-bold">Số lượng</label></div>
+                                <input type="number" autocomplete="off" data-role="input" id="addAmountProduct" name="addAmountProduct"data-validate="required number"> 
+                                <span class="invalid_feedback">
+                                    Vui lòng ghi số lượng bằng số
+                                </span>
 
                                 <label class="text-bold">Đơn vị tính</label>
                                 <input type="text" autocomplete="off" data-role="input" id="addUnitProduct" name="addUnitProduct" class="mb-2 fg-black" data-validate="required">                           
@@ -530,18 +554,6 @@
                                 @endfor
                                 </div>
 
-                                <label class="text-bold mt-2">Giá sản phẩm</label>
-                                <input type="text" autocomplete="off" data-role="input" id="addPriceProduct" name="addPriceProduct" data-validate="required" pattern="^\$\d{1,3}(,\d{3})*(\.\d+)?$" data-type="currency" ></input>
-                                <span class="invalid_feedback">
-                                    Vui lòng ghi giá sản phẩm bằng số
-                                </span>
-
-
-                                <div><label class="text-bold">Số lượng</label></div>
-                                <input type="number" autocomplete="off" data-role="input" id="addAmountProduct" name="addAmountProduct"data-validate="required number"> 
-                                <span class="invalid_feedback">
-                                    Vui lòng ghi số lượng bằng số
-                                </span>
                                 <div style="margin-left: 0px; margin-right:0px" class="form-group mt-2 row">                             
                                     <button style="padding:0px" class="cell p-1 m-1" onclick="calTotalMoney('addPriceProduct','addAmountProduct',$(this).next());"><span class="mif-calculator2"></span>Click để tính tổng tiền</button>
                                     <input class="cell bg-gray fg-black text-right border-none" disabled>
