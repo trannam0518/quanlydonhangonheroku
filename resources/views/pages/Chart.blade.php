@@ -5,8 +5,9 @@
         <p class="p-2 mr-auto text-center text-leader">
             Thống kê dữ liệu
         </p>                  
-    </div>
+    </div>   
     <h3 class="text-center">Thống Kê Theo Tháng</h3>
+    <div id="progresing" data-role="activity" data-type="metro" data-style="color"></div>
     <canvas id="chartMonth"></canvas> 
 
     <div class="text-center text-bold text-small"><span >Đơn vị tính 1.000 VNĐ<span></div>
@@ -52,7 +53,8 @@
                     _token: '{{csrf_token()}}',            
                 },
             }).done(function(ketqua) {   
-                             
+                var progresing = document.getElementById("progresing");
+                progresing.classList.add("d-none");       
                 if(ketqua=='error'){
                     Metro.infobox.create("<p>Có đơn hàng chưa cập nhật ngày giao hàng</p>", "alert");
                     return;
